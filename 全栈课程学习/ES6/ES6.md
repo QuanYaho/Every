@@ -134,12 +134,127 @@ let sum = arr.reduce((temp, item, index)=>{
 console.log(sum/arr.length)   // 140/5
 ```
 
+- from
+> 将伪数组转化为可遍历的数组
+
+```
+let divs = document.querySelectAll('div')
+Array.from(divs).forEach(item) {
+    // ...
+}
+```
+
 数组会修改原数组的方法： push pop unshift splice
 2. json-2个变化
 
 
 ## 4. 字符串
+- starsWith 
+    - 以XXX开头
+- endsWith
+    - 以XXX结尾
+> 判断是否以 .txt 结尾
+
 ## 5. 面向对象
+> 掌握： class、constructor、extends、super、箭头函数、bind
+
+```
+// 传统构造函数
+function Person(name, age) {
+    this.age = age;
+    this.name = name;
+}
+
+Person.prototype.showName = function() {
+    alert(this.name)
+}
+
+let p = new Person('lisa',22)
+```
+
+```
+// 传统继承
+function Worker(name, age, job) {
+    Person.call(this,name,age)
+    this.job = job
+}
+
+Worker.prototype.constructor = Worker
+
+Worker.prototype.showJob = function() {
+    alert(this.job)
+}
+
+let w = new Worker('xiao',12)
+
+w.showJob()
+w.showName()
+```
+
+- ES6 面向对象
+```
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    showName() {
+        alert(this.name)
+    }
+}
+
+let p = new Person('soya',6)
+p.showName()
+```
+- ES6继承
+```
+class Worker extends Person{
+    constructor(name, age, job) {
+        // super 超类（父类）
+        super(name, age)
+        this.job = job
+
+        // extends会自动继承父类的方法，只写自身的即可
+        showJob() {
+            alert(this.job)
+        }
+    }
+}
+
+let w = new Worker('xiao',12)
+
+w.showJob()
+w.showName()
+
+```
+- 绑定this
+  - bind  固定函数的this 
+  - 箭头函数的this
+
+> 普通函数： 根据调用我的人。谁调用，this指向谁<br>
+> 箭头函数: 根据所在的环境
+```
+function show() {
+    alert(this)
+}
+
+document.onclick = show.bind('aaa')  // 弹出的this就是 aaa
+```
+
+```
+document.onclick = function () {
+    let arr = [1, 2, 3]
+
+    arr.a = ()=> {
+        alert(this)   // document
+    }
+
+    arr.a()
+}
+```
 ## 6. Promise
+
+
 ## 7. generator
 ## 8. 模块
