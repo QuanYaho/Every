@@ -253,8 +253,18 @@ document.onclick = function () {
     arr.a()
 }
 ```
-## 6. Promise
+
+## 6.异步
+
+(1) Promise
+
+> 异步操作同步化
 
 
-## 7. generator
-## 8. 模块
+(2) generator
+
+> 生成器
+
+(3) async/await ( ES7)
+
+## 7. 模块化
