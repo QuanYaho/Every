@@ -260,11 +260,174 @@ document.onclick = function () {
 
 > 异步操作同步化
 
+```
+Promise.all(['request1', 'request2']).then((arr) => {
+    console.log(arr)
+}, (err) => {})
+```
+
+```
+Promise.all()   与：所有的都成功
+Promise.race()   或：只要有一个完成即可（比赛）
+```
+
+局限： 带逻辑的异步操作麻烦
 
 (2) generator
+（Promise改进版）
 
-> 生成器
+> 生成器 <br>
+> 能暂停
+
+```
+// 普通函数与生成器函数比较
+
+function show() {
+    alert('abc')
+}
+
+function *show2() {
+    alert('aaa')
+    alert('bbb')
+}
+```
+
+```
+function *show2() {
+    alert('aaa')
+    yield;     // (放弃，让步, 暂停的标志)
+    alert('bbb')
+}
+
+// 不会直接执行，会返回一个generator对象
+let gen = show2()
+
+<!-- next 踹一脚走一步 -->
+gen.next();   // aaa // 执行的是第一个yield之前的代码
+
+gen.next();  // bbb
+
+```
+
+- yeild
+  - 传参  （要传多个参数，传对象。yield只能接收一个参数）
+  - 返回值
+
+```
+// 传参：  （联想分割，切菜）
+
+function *show2() {
+    alert('aaa')
+    let a = yield;      // yield传参
+    alert('bbb' + a)
+}
+
+let gen = show2()
+
+gen.next();  
+
+gen.next(12);  // bbb
+
+```
+
+
+
+```
+// 返回值1：  
+
+function *show2() {
+    alert('aaa')
+    yield  55;      // yield返回值
+    alert('bbb')
+}
+
+let gen = show2()
+
+let res1 = gen.next();  
+console.log(res1)   // {value: 55, done:false}
+
+let res2 = gen.next();  
+console.log(res2)   // {value: undefined, done:true}
+```
+```
+// 返回值2： (最后的返回值还是用return) 
+
+function *show2() {
+    alert('aaa')
+    yield  55;      // yield返回值
+    alert('bbb')
+    return 5555
+}
+
+let gen = show2()
+
+let res1 = gen.next();  
+console.log(res1)   // {value: 55, done:false}
+
+let res2 = gen.next();  
+console.log(res2)   // {value: 5555, done:true}
+```
+generator + promise配合：
+- 需要外来的runner辅助执行——不标准、不统一、性能低
+- generator函数不能写成箭头函数
 
 (3) async/await ( ES7)
 
+```
+async function show() {
+	alert('a')
+	await 12;
+	alert('b')
+}
+show()
+
+```
+
+```
+async function show() {
+	alert('a')
+	await new Promise((resolve,reject) => {
+		setTimeout(function() {
+			resolve();
+		},1000)
+	})
+	alert('3s后的b')
+}
+show()
+```
+
+```
+async function() {
+    let res1 = await 请求1(异步操作)
+    let res2 = await 请求2(异步操作)
+    let res3 = await 请求3(异步操作)
+    console.log(res1, res2, res3)
+}
+
+// 简写
+(async ()=> {
+    //....
+})()
+```
+- await 错误处理
+> 原始的`try { ... } catch(e) { ... }`
+```
+async function show() {
+    try {
+        let data1 = await $.ajax({ url: '1.txt', dataType: 'json})
+        let data2 = await $.ajax({ url: 'rervvtrg.txt', dataType: 'json})
+        let data3 = await $.ajax({ url: '3.txt', dataType: 'json})
+    }catch(e) {
+        alert('报错啦~~')
+    }
+}
+
+show()
+```
 ## 7. 模块化
+
+
+## ES6编译：
+ES6 -> ES5
+
+babel： polyfill 工具
