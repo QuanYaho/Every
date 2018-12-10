@@ -1,0 +1,3 @@
+- npm init
+    - 创建package.json 
+- uuid

@@ -114,3 +114,11 @@
 <hr/>
 
 - ZLIB 压缩
+
+<hr/>
+
+#### 数据交互
+
+- Node接收GET数据、POST数据、文件数据
+- 数据库
+- WebSocket
